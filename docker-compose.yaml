@@ -1,15 +1,15 @@
 version: '3.9'
-# volumes:
-#   php_socket:
+volumes:
+  php_socket:
 services:
   nginx:
     image: nginx:latest
     ports:
-      - 8091:80
+      - 8090:80
     depends_on:
       - wordpress
     volumes:
-      # - php_socket:/var/run
+      - php_socket:/var/run
       - ./nginx:/etc/nginx
       - ./wordpress/src:/var/www/html
       - ./logs/nginx:/var/log/nginx
@@ -25,10 +25,10 @@ services:
     depends_on:
       - db
     volumes:
-      # - php_socket:/var/run
+      - php_socket:/var/run
       - ./wordpress/src:/var/www/html
       - ./logs/wordpress/php:/var/log/php
-      # - ./php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/zz-docker.conf
+      - ./php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/zz-docker.conf
     container_name: wordpress
   db:
     image: mysql:5.7
